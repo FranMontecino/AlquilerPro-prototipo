@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlquilerPro - Gestión Inmobiliaria</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Login/Register Screen -->
+        <div id="login-screen" class="screen active">
+
+            <div class="video-background">
+                <video autoplay muted loop>
+                    <source src="/src/housetour.mp4#t=10" type="video/mp4">
+                </video>
+                <div class="video-overlay"></div>
+            </div>
+
+            <div class="login-container">
+                <div class="login-card">
+                    <div class="logo-section">
+                        <i class="fas fa-building"></i>
+                        <h1>AlquilerPro</h1>
+                        <p>Gestión Inmobiliaria Profesional</p>
+                    </div>
+                    
+                    <div class="form-section">
+                        <div class="tab-buttons">
+                            <button class="tab-btn active" onclick="showLogin()">Iniciar Sesión</button>
+                            <button class="tab-btn" onclick="showRegister()">Registrarse</button>
+                        </div>
+                        
+                        <!-- Login Form -->
+                        <form id="login-form" class="auth-form active">
+                            <div class="input-group">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" placeholder="Correo electrónico" required>
+                            </div>
+                            <div class="input-group">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" placeholder="Contraseña" required>
+                            </div>
+                            <button type="submit" class="auth-btn" onclick="goToDashboard()">Iniciar Sesión</button>
+                            <a href="#" class="forgot-link">¿Olvidaste tu contraseña?</a>
+                        </form>
+                        
+                        <!-- Register Form -->
+                        <form id="register-form" class="auth-form">
+                            <div class="input-group">
+                                <i class="fas fa-user"></i>
+                                <input type="text" placeholder="Nombre completo" required>
+                            </div>
+                            <div class="input-group">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" placeholder="Correo electrónico" required>
+                            </div>
+                            <div class="input-group">
+                                <i class="fas fa-building"></i>
+                                <input type="text" placeholder="Nombre de la inmobiliaria" required>
+                            </div>
+                            <div class="input-group">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" placeholder="Contraseña" required>
+                            </div>
+                            <div class="input-group">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" placeholder="Confirmar contraseña" required>
+                            </div>
+                            <button type="submit" class="auth-btn" onclick="goToDashboard()">Registrarse</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Screen -->
+        <div id="dashboard-screen" class="screen">
+            <div class="dashboard-container">
+                <!-- Sidebar -->
+                <div class="sidebar">
+                    <div class="sidebar-header">
+                        <i class="fas fa-building"></i>
+                        <span>AlquilerPro</span>
+                    </div>
+                    
+                    <nav class="sidebar-nav">
+                        <a href="#" class="nav-item active" data-section="dashboard">
+                            <i class="fas fa-home"></i>
+                            <span>Dashboard</span>
+                        </a>
+                        
+                        <div class="nav-section">
+                            <div class="nav-title">Propiedades</div>
+                            <a href="#" class="nav-item" data-section="add-property">
+                                <i class="fas fa-plus"></i>
+                                <span>Añadir Propiedad</span>
+                            </a>
+                            <a href="#" class="nav-item" data-section="list-properties">
+                                <i class="fas fa-list"></i>
+                                <span>Listar Propiedades</span>
+                            </a>
+                        </div>
+                        
+                        <div class="nav-section">
+                            <div class="nav-title">Inquilinos</div>
+                            <a href="#" class="nav-item" data-section="add-tenant">
+                                <i class="fas fa-user-plus"></i>
+                                <span>Añadir Inquilino</span>
+                            </a>
+                            <a href="#" class="nav-item" data-section="list-tenants">
+                                <i class="fas fa-users"></i>
+                                <span>Listar Inquilinos</span>
+                            </a>
+                        </div>
+                        
+                        <div class="nav-section">
+                            <div class="nav-title">Gestión</div>
+                            <a href="#" class="nav-item" data-section="contracts">
+                                <i class="fas fa-file-contract"></i>
+                                <span>Contratos</span>
+                            </a>
+                            <a href="#" class="nav-item" data-section="payments">
+                                <i class="fas fa-dollar-sign"></i>
+                                <span>Pagos</span>
+                            </a>
+                            <a href="#" class="nav-item" data-section="reports">
+                                <i class="fas fa-chart-bar"></i>
+                                <span>Reportes</span>
+                            </a>
+                        </div>
+                    </nav>
+                </div>
+
+                <!-- Main Content -->
+                <div class="main-content">
+                    <!-- Header -->
+                    <header class="header">
+                        <div class="header-left">
+                            <h2 id="page-title">Dashboard</h2>
+                            <p>Bienvenido de vuelta, Juan Pérez</p>
+                        </div>
+                        <div class="header-right">
+                            <div class="user-info">
+                                <span>Juan Pérez</span>
+                                <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
+                            </div>
+                        </div>
+                    </header>
+
+                    <!-- Dashboard Section -->
+                    <div id="dashboard-content" class="content-section active">
+                        <!-- Stats Cards -->
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-home"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3>12</h3>
+                                    <p>Propiedades</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3>8</h3>
+                                    <p>Inquilinos Activos</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-dollar-sign"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3>$45,600</h3>
+                                    <p>Ingresos del Mes</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3>3</h3>
+                                    <p>Pagos Pendientes</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Properties Section -->
+                        <div class="section">
+                            <div class="section-header">
+                                <h3><i class="fas fa-home"></i> Propiedades Recientes</h3>
+                                <button class="btn-secondary" onclick="showSection('list-properties')">Ver Todas</button>
+                            </div>
+                            <div class="properties-grid">
+                                <div class="property-card">
+                                    <div class="property-image">
+                                        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=300&h=200&fit=crop" alt="Casa Moderna">
+                                        <div class="property-status available">Disponible</div>
+                                    </div>
+                                    <div class="property-info">
+                                        <h4>Casa Moderna</h4>
+                                        <p class="property-address">Av. Libertador 1234</p>
+                                        <p class="property-price">$1,200/mes</p>
+                                        <div class="property-details">
+                                            <span><i class="fas fa-bed"></i> 3</span>
+                                            <span><i class="fas fa-bath"></i> 2</span>
+                                            <span><i class="fas fa-expand-arrows-alt"></i> 120m²</span>
+                                        </div>
+                                        <button class="btn-primary">Ver Detalles</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="property-card">
+                                    <div class="property-image">
+                                        <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=300&h=200&fit=crop" alt="Apartamento Centro">
+                                        <div class="property-status rented">Alquilado</div>
+                                    </div>
+                                    <div class="property-info">
+                                        <h4>Apartamento Centro</h4>
+                                        <p class="property-address">Calle 25 de Mayo 567</p>
+                                        <p class="property-price">$800/mes</p>
+                                        <div class="property-details">
+                                            <span><i class="fas fa-bed"></i> 2</span>
+                                            <span><i class="fas fa-bath"></i> 1</span>
+                                            <span><i class="fas fa-expand-arrows-alt"></i> 80m²</span>
+                                        </div>
+                                        <button class="btn-primary">Ver Detalles</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="property-card">
+                                    <div class="property-image">
+                                        <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=300&h=200&fit=crop" alt="Casa con Jardín">
+                                        <div class="property-status rented">Alquilado</div>
+                                    </div>
+                                    <div class="property-info">
+                                        <h4>Casa con Jardín</h4>
+                                        <p class="property-address">Barrio Los Álamos 890</p>
+                                        <p class="property-price">$1,500/mes</p>
+                                        <div class="property-details">
+                                            <span><i class="fas fa-bed"></i> 4</span>
+                                            <span><i class="fas fa-bath"></i> 3</span>
+                                            <span><i class="fas fa-expand-arrows-alt"></i> 180m²</span>
+                                        </div>
+                                        <button class="btn-primary">Ver Detalles</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recent Activity -->
+                        <div class="section">
+                            <div class="section-header">
+                                <h3><i class="fas fa-clock"></i> Actividad Reciente</h3>
+                            </div>
+                            <div class="activity-list">
+                                <div class="activity-item">
+                                    <div class="activity-icon payment">
+                                        <i class="fas fa-dollar-sign"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <p><strong>Pago recibido</strong> - Casa Moderna</p>
+                                        <span class="activity-time">Hace 2 horas</span>
+                                    </div>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-icon new">
+                                        <i class="fas fa-user-plus"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <p><strong>Nuevo inquilino</strong> - María González</p>
+                                        <span class="activity-time">Ayer</span>
+                                    </div>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-icon contract">
+                                        <i class="fas fa-file-contract"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <p><strong>Contrato renovado</strong> - Apartamento Centro</p>
+                                        <span class="activity-time">Hace 3 días</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Add Property Section -->
+                    <div id="add-property-content" class="content-section">
+                        <div class="section">
+                            <div class="section-header">
+                                <h3><i class="fas fa-plus"></i> Añadir Nueva Propiedad</h3>
+                            </div>
+                            <div class="form-container">
+                                <form class="property-form">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Título de la Propiedad</label>
+                                            <input type="text" placeholder="Ej: Casa Moderna en Centro">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Tipo de Propiedad</label>
+                                            <select>
+                                                <option>Casa</option>
+                                                <option>Apartamento</option>
+                                                <option>Local Comercial</option>
+                                                <option>Oficina</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Dirección</label>
+                                            <input type="text" placeholder="Dirección completa">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Precio Mensual</label>
+                                            <input type="number" placeholder="0">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Habitaciones</label>
+                                            <input type="number" placeholder="0">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Baños</label>
+                                            <input type="number" placeholder="0">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Metros Cuadrados</label>
+                                            <input type="number" placeholder="0">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>Descripción</label>
+                                        <textarea rows="4" placeholder="Descripción detallada de la propiedad..."></textarea>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>Imágenes</label>
+                                        <div class="file-upload">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                            <p>Arrastra imágenes aquí o haz clic para seleccionar</p>
+                                            <input type="file" multiple accept="image/*">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-actions">
+                                        <button type="button" class="btn-secondary">Cancelar</button>
+                                        <button type="submit" class="btn-primary">Guardar Propiedad</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- List Properties Section -->
+                    <div id="list-properties-content" class="content-section">
+                        <div class="section">
+                            <div class="section-header">
+                                <h3><i class="fas fa-list"></i> Lista de Propiedades</h3>
+                                <button class="btn-primary" onclick="showSection('add-property')">
+                                    <i class="fas fa-plus"></i> Nueva Propiedad
+                                </button>
+                            </div>
+                            
+                            <div class="filters-bar">
+                                <div class="filter-group">
+                                    <input type="text" placeholder="Buscar por dirección o título..." class="search-input">
+                                </div>
+                                <div class="filter-group">
+                                    <select>
+                                        <option>Todos los tipos</option>
+                                        <option>Casa</option>
+                                        <option>Apartamento</option>
+                                        <option>Local</option>
+                                    </select>
+                                </div>
+                                <div class="filter-group">
+                                    <select>
+                                        <option>Todos los estados</option>
+                                        <option>Disponible</option>
+                                        <option>Alquilado</option>
+                                        <option>Mantenimiento</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="table-container">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Propiedad</th>
+                                            <th>Dirección</th>
+                                            <th>Precio</th>
+                                            <th>Estado</th>
+                                            <th>Inquilino</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="property-cell">
+                                                    <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=50&h=50&fit=crop" alt="">
+                                                    <div>
+                                                        <strong>Casa Moderna</strong>
+                                                        <p>3 hab • 2 baños • 120m²</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>Av. Libertador 1234</td>
+                                            <td>$1,200/mes</td>
+                                            <td><span class="status available">Disponible</span></td>
+                                            <td>-</td>
+                                            <td>
+                                                <div class="action-buttons">
+                                                    <button class="btn-action view"><i class="fas fa-eye"></i></button>
+                                                    <button class="btn-action edit"><i class="fas fa-edit"></i></button>
+                                                    <button class="btn-action delete"><i class="fas fa-trash"></i></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="property-cell">
+                                                    <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=50&h=50&fit=crop" alt="">
+                                                    <div>
+                                                        <strong>Apartamento Centro</strong>
+                                                        <p>2 hab • 1 baño • 80m²</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>Calle 25 de Mayo 567</td>
+                                            <td>$800/mes</td>
+                                            <td><span class="status rented">Alquilado</span></td>
+                                            <td>María González</td>
+                                            <td>
+                                                <div class="action-buttons">
+                                                    <button class="btn-action view"><i class="fas fa-eye"></i></button>
+                                                    <button class="btn-action edit"><i class="fas fa-edit"></i></button>
+                                                    <button class="btn-action delete"><i class="fas fa-trash"></i></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="property-cell">
+                                                    <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=50&h=50&fit=crop" alt="">
+                                                    <div>
+                                                        <strong>Casa con Jardín</strong>
+                                                        <p>4 hab • 3 baños • 180m²</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>Barrio Los Álamos 890</td>
+                                            <td>$1,500/mes</td>
+                                            <td><span class="status rented">Alquilado</span></td>
+                                            <td>Carlos Mendoza</td>
+                                            <td>
+                                                <div class="action-buttons">
+                                                    <button class="btn-action view"><i class="fas fa-eye"></i></button>
+                                                    <button class="btn-action edit"><i class="fas fa-edit"></i></button>
+                                                    <button class="btn-action delete"><i class="fas fa-trash"></i></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Add Tenant Section -->
+                    <div id="add-tenant-content" class="content-section">
+                        <div class="section">
+                            <div class="section-header">
+                                <h3><i class="fas fa-user-plus"></i> Añadir Nuevo Inquilino</h3>
+                            </div>
+                            <div class="form-container">
+                                <form class="tenant-form">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Nombre Completo</label>
+                                            <input type="text" placeholder="Nombre y apellido">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>DNI/Cédula</label>
+                                            <input type="text" placeholder="Número de documento">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <input type="email" placeholder="correo@email.com">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Teléfono</label>
+                                            <input type="tel" placeholder="Número de teléfono">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>Dirección Personal</label>
+                                        <input type="text" placeholder="Dirección completa">
+                                    </div>
+                                    
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Fecha de Nacimiento</label>
+                                            <input type="date">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Estado Civil</label>
+                                            <select>
+                                                <option>Soltero/a</option>
+                                                <option>Casado/a</option>
+                                                <option>Divorciado/a</option>
+                                                <option>Viudo/a</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>Ocupación</label>
+                                        <input type="text" placeholder="Trabajo o profesión">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>Ingresos Mensuales</label>
+                                        <input type="number" placeholder="0">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>Referencias</label>
+                                        <textarea rows="3" placeholder="Referencias personales o laborales..."></textarea>
+                                    </div>
+                                    
+                                    <div class="form-actions">
+                                        <button type="button" class="btn-secondary">Cancelar</button>
+                                        <button type="submit" class="btn-primary">Guardar Inquilino</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- List Tenants Section -->
+                    <div id="list-tenants-content" class="content-section">
+                        <div class="section">
+                            <div class="section-header">
+                                <h3><i class="fas fa-users"></i> Lista de Inquilinos</h3>
+                                <button class="btn-primary" onclick="showSection('add-tenant')">
+                                    <i class="fas fa-user-plus"></i> Nuevo Inquilino
+                                </button>
+                            </div>
+                            
+                            <div class="filters-bar">
+                                <div class="filter-group">
+                                    <input type="text" placeholder="Buscar por nombre o documento..." class="search-input">
+                                </div>
+                                <div class="filter-group">
+                                    <select>
+                                        <option>Todos los estados</option>
+                                        <option>Activo</option>
+                                        <option>Inactivo</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="table-container">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Inquilino</th>
+                                            <th>Documento</th>
+                                            <th>Contacto</th>
+                                            <th>Propiedad</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="tenant-cell">
+                                                    <div class="tenant-avatar">MG</div>
+                                                    <div>
+                                                        <strong>María González</strong>
+                                                        <p>Profesora</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>12.345.678</td>
+                                            <td>
+                                                <div>
+                                                    <p>maria@email.com</p>
+                                                    <p>+1 234 567 890</p>
+                                                </div>
+                                            </td>
+                                            <td>Apartamento Centro</td>
+                                            <td><span class="status active">Activo</span></td>
+                                            <td>
+                                                <div class="action-buttons">
+                                                    <button class="btn-action view"><i class="fas fa-eye"></i></button>
+                                                    <button class="btn-action edit"><i class="fas fa-edit"></i></button>
+                                                    <button class="btn-action delete"><i class="fas fa-trash"></i></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="tenant-cell">
+                                                    <div class="tenant-avatar">CM</div>
+                                                    <div>
+                                                        <strong>Carlos Mendoza</strong>
+                                                        <p>Ingeniero</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>87.654.321</td>
+                                            <td>
+                                                <div>
+                                                    <p>carlos@email.com</p>
+                                                    <p>+1 987 654 321</p>
+                                                </div>
+                                            </td>
+                                            <td>Casa con Jardín</td>
+                                            <td><span class="status active">Activo</span></td>
+                                            <td>
+                                                <div class="action-buttons">
+                                                    <button class="btn-action view"><i class="fas fa-eye"></i></button>
+                                                    <button class="btn-action edit"><i class="fas fa-edit"></i></button>
+                                                    <button class="btn-action delete"><i class="fas fa-trash"></i></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contracts Section -->
+                    <div id="contracts-content" class="content-section">
+                        <div class="section">
+                            <div class="section-header">
+                                <h3><i class="fas fa-file-contract"></i> Gestión de Contratos</h3>
+                                <button class="btn-primary">
+                                    <i class="fas fa-plus"></i> Nuevo Contrato
+                                </button>
+                            </div>
+                            
+                            <div class="contracts-grid">
+                                <div class="contract-card">
+                                    <div class="contract-header">
+                                        <h4>Contrato #001</h4>
+                                        <span class="contract-status active">Activo</span>
+                                    </div>
+                                    <div class="contract-info">
+                                        <p><strong>Propiedad:</strong> Casa Moderna</p>
+                                        <p><strong>Inquilino:</strong> Ana López</p>
+                                        <p><strong>Inicio:</strong> 01/01/2024</p>
+                                        <p><strong>Fin:</strong> 31/12/2024</p>
+                                        <p><strong>Monto:</strong> $1,200/mes</p>
+                                    </div>
+                                    <div class="contract-actions">
+                                        <button class="btn-secondary">Ver Contrato</button>
+                                        <button class="btn-primary">Renovar</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="contract-card">
+                                    <div class="contract-header">
+                                        <h4>Contrato #002</h4>
+                                        <span class="contract-status active">Activo</span>
+                                    </div>
+                                    <div class="contract-info">
+                                        <p><strong>Propiedad:</strong> Apartamento Centro</p>
+                                        <p><strong>Inquilino:</strong> María González</p>
+                                        <p><strong>Inicio:</strong> 15/03/2024</p>
+                                        <p><strong>Fin:</strong> 14/03/2025</p>
+                                        <p><strong>Monto:</strong> $800/mes</p>
+                                    </div>
+                                    <div class="contract-actions">
+                                        <button class="btn-secondary">Ver Contrato</button>
+                                        <button class="btn-primary">Renovar</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="contract-card">
+                                    <div class="contract-header">
+                                        <h4>Contrato #003</h4>
+                                        <span class="contract-status expired">Vencido</span>
+                                    </div>
+                                    <div class="contract-info">
+                                        <p><strong>Propiedad:</strong> Local Comercial</p>
+                                        <p><strong>Inquilino:</strong> Roberto Silva</p>
+                                        <p><strong>Inicio:</strong> 01/06/2023</p>
+                                        <p><strong>Fin:</strong> 31/05/2024</p>
+                                        <p><strong>Monto:</strong> $2,000/mes</p>
+                                    </div>
+                                    <div class="contract-actions">
+                                        <button class="btn-secondary">Ver Contrato</button>
+                                        <button class="btn-warning">Renovar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payments Section -->
+                    <div id="payments-content" class="content-section">
+                        <div class="section">
+                            <div class="section-header">
+                                <h3><i class="fas fa-dollar-sign"></i> Gestión de Pagos</h3>
+                                <button class="btn-primary">
+                                    <i class="fas fa-plus"></i> Registrar Pago
+                                </button>
+                            </div>
+                            
+                            <div class="payments-summary">
+                                <div class="payment-stat">
+                                    <h4>$3,500</h4>
+                                    <p>Pagos del Mes</p>
+                                </div>
+                                <div class="payment-stat">
+                                    <h4>$1,200</h4>
+                                    <p>Pagos Pendientes</p>
+                                </div>
+                                <div class="payment-stat">
+                                    <h4>$800</h4>
+                                    <p>Pagos Atrasados</p>
+                                </div>
+                            </div>
+                            
+                            <div class="table-container">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Propiedad</th>
+                                            <th>Inquilino</th>
+                                            <th>Periodo</th>
+                                            <th>Monto</th>
+                                            <th>Fecha Venc.</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Casa Moderna</td>
+                                            <td>Ana López</td>
+                                            <td>Junio 2024</td>
+                                            <td>$1,200</td>
+                                            <td>01/06/2024</td>
+                                            <td><span class="status paid">Pagado</span></td>
+                                            <td>
+                                                <button class="btn-action view"><i class="fas fa-receipt"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Apartamento Centro</td>
+                                            <td>María González</td>
+                                            <td>Junio 2024</td>
+                                            <td>$800</td>
+                                            <td>15/06/2024</td>
+                                            <td><span class="status pending">Pendiente</span></td>
+                                            <td>
+                                                <button class="btn-action edit"><i class="fas fa-edit"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Casa con Jardín</td>
+                                            <td>Carlos Mendoza</td>
+                                            <td>Mayo 2024</td>
+                                            <td>$1,500</td>
+                                            <td>20/05/2024</td>
+                                            <td><span class="status overdue">Atrasado</span></td>
+                                            <td>
+                                                <button class="btn-action warning"><i class="fas fa-exclamation-triangle"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reports Section -->
+                    <div id="reports-content" class="content-section">
+                        <div class="section">
+                            <div class="section-header">
+                                <h3><i class="fas fa-chart-bar"></i> Reportes y Estadísticas</h3>
+                                <button class="btn-primary">
+                                    <i class="fas fa-download"></i> Exportar Reportes
+                                </button>
+                            </div>
+                            
+                            <div class="reports-grid">
+                                <div class="report-card">
+                                    <h4>Ingresos Mensuales</h4>
+                                    <div class="chart-placeholder">
+                                        <i class="fas fa-chart-line"></i>
+                                        <p>Gráfico de ingresos de los últimos 12 meses</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="report-card">
+                                    <h4>Ocupación de Propiedades</h4>
+                                    <div class="chart-placeholder">
+                                        <i class="fas fa-chart-pie"></i>
+                                        <p>Distribución de propiedades ocupadas vs disponibles</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="report-card">
+                                    <h4>Pagos por Estado</h4>
+                                    <div class="chart-placeholder">
+                                        <i class="fas fa-chart-bar"></i>
+                                        <p>Estado de pagos del mes actual</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="report-card">
+                                    <h4>Inquilinos por Duración</h4>
+                                    <div class="chart-placeholder">
+                                        <i class="fas fa-chart-area"></i>
+                                        <p>Análisis de permanencia de inquilinos</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="reports-summary">
+                                <h4>Resumen Ejecutivo</h4>
+                                <div class="summary-stats">
+                                    <div class="summary-item">
+                                        <strong>Tasa de Ocupación:</strong> 83.3%
+                                    </div>
+                                    <div class="summary-item">
+                                        <strong>Ingreso Promedio:</strong> $1,166/propiedad
+                                    </div>
+                                    <div class="summary-item">
+                                        <strong>Tiempo Promedio de Estadía:</strong> 18 meses
+                                    </div>
+                                    <div class="summary-item">
+                                        <strong>Tasa de Pagos a Tiempo:</strong> 91.2%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
